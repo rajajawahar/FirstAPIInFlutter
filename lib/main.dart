@@ -109,3 +109,17 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+class User{
+  final int login;
+  final int id;
+  User({this.login,this.id});
+
+  factory User.fromJson(Map<String, dynamic> json){
+return new User(
+      login: json['login'],
+      id: json['id']
+    );
+  }
+
+
+}
