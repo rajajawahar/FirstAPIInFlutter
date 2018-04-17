@@ -21,12 +21,25 @@ class MyApp extends StatelessWidget {
         appBar: new AppBar(
           title: new Text('Fetch Data Example'),
         ),
-        body: new Center(
-          child: new FutureBuilder(
+        body: new Container(
+          child: new FutureBuilder<List<User>>(
             future: fetchUsersFromGitHub(),
             builder: (context, snapshot) {
+              
               if (snapshot.hasData) {
-                return new Text(snapshot.data.login.toString());
+                return new ListView.builder(
+            itemCount: snapshot.data.length,
+         itemBuilder: (context, index) {
+      return new Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          new Text(snapshot.data[index].name,
+            style: new TextStyle(fontWeight: FontWeight.bold)),
+          new Divider()
+        ]
+      );
+    }
+  );
               } else if (snapshot.hasError) {
                 return new Text("${snapshot.error}");
               }
@@ -42,7 +55,8 @@ class MyApp extends StatelessWidget {
 
   Future<List<User>> fetchUsersFromGitHub() async {
     final response = await http.get('https://api.github.com/users');
-    final responseJson = json.decode(response.body);
+    print(response.body);
+    List responseJson = json.decode(response.body.toString());
     List<User> userList = createUserList(responseJson);
     return userList;
   }
