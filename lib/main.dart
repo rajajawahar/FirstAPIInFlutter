@@ -32,9 +32,11 @@ class MyApp extends StatelessWidget {
          itemBuilder: (context, index) {
       return new Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          new Text(snapshot.data[index].name,
-            style: new TextStyle(fontWeight: FontWeight.bold)),
+        children: <Widget>[ 
+           new ListTile(
+          title: new Text(snapshot.data[index].name)
+        )
+,
           new Divider()
         ]
       );
